@@ -32,7 +32,7 @@ function fetchBreeds(url) {
     .then(json => renderBreeds(json)); 
     // 
 }
-
+// need to figure out how to get one layer deeper in nested object
 function renderBreeds(json) {
     const breedList = document.getElementById("dog-breeds");
     json.message.forEach(breed => {
