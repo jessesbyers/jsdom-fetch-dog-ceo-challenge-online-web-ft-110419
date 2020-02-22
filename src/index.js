@@ -1,8 +1,13 @@
 console.log('%c HI', 'color: firebrick')
 
-const imgUrl = "https://dog.ceo/api/breeds/image/random/4"
+document.addEventListener('DOMContentLoaded', function() {
+    fetchDogs(imgUrl);
+    fetchBreeds(breedUrl);
+  })
 
 // DONE - challenge 1
+const imgUrl = "https://dog.ceo/api/breeds/image/random/4"
+
 function fetchDogs(url) {
     return fetch(url)
     .then(resp => resp.json())
@@ -18,12 +23,7 @@ function fetchDogs(url) {
       })
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
-    fetchDogs(imgUrl);
-    fetchBreeds(breedUrl);
-  })
-
-//   Challenge 2
+//   DONE - Challenge 2
 const breedUrl = 'https://dog.ceo/api/breeds/list/all'
 
 function fetchBreeds(url) {
@@ -31,27 +31,19 @@ function fetchBreeds(url) {
     .then(resp => resp.json())
     .then(json => renderBreeds(json)); 
 }
-// need to figure out how to get one layer deeper in nested object
 function renderBreeds(json) {
+    // console.log(json.message)
+    // console.log(`${Object.keys(json.message)}`);
+    let breeds = Object.keys(json.message)
+    // console.log(breeds);
     const breedList = document.getElementById("dog-breeds");
-    console.log(json.message)
-    // for (let i = 0; i < json.message.length; i++) {
-        console.log(`${Object.keys}`);
-    // }
-
-    //   let breeds = []
-    // Object.keys.forEach(breed => {
-    //     // breeds.push(breed)
-    //     console.log(breed)
-
-
-    //         const li = document.createElement('li')
-    //         li.innerHTML = `<img src=${breed.key}>`
-    //         breedList.appendChild(li)
-    // })
-    
+    breeds.forEach(breed => {
+            const li = document.createElement('li')
+            li.innerHTML = breed
+            breedList.appendChild(li)
+    })
 }
 
-
+// Challenge 3
 
   
