@@ -1,29 +1,47 @@
 console.log('%c HI', 'color: firebrick')
 
-document.addEventListener('DOMContentLoaded', function() {
-    fetchDogs(imgUrl);
-    fetchBreeds(breedUrl);
-  })
 
-// DONE - challenge 1
+document.addEventListener('DOMContentLoaded', function() {
+    // DONE - challenge 1
+    fetchDogs(imgUrl);
+     // DONE - challenge 1
+    fetchBreeds(breedUrl);
+
+    // challenge 3
+    document.querySelector("ul").addEventListener('mouseover', function() {
+        let dogs = document.querySelectorAll("li")
+        dogs.forEach(dog => {
+            dog.addEventListener('click', function() {
+                dog.style = "color:red"
+            })
+        })
+    })
+
+    document.getElementById("breed-dropdown").addEventListener('click', function(){
+        fetchBreeds(breedUrl);            
+        filterDogs()
+        console.log("fetched and filtered dogs")
+    })
+})
+
+
 const imgUrl = "https://dog.ceo/api/breeds/image/random/4"
 
 function fetchDogs(url) {
     return fetch(url)
     .then(resp => resp.json())
     .then(json => renderImages(json)); 
-  }
+}
 
-  function renderImages(json) {
-      const dogImgContainer = document.getElementById("dog-image-container");
-          json[`message`].forEach(dog => {
-          const img = document.createElement('div')
-          img.innerHTML = `<img src=${dog}>`
-          dogImgContainer.appendChild(img)
-      })
-  }
+function renderImages(json) {
+    const dogImgContainer = document.getElementById("dog-image-container");
+        json[`message`].forEach(dog => {
+        const img = document.createElement('div')
+        img.innerHTML = `<img src=${dog}>`
+        dogImgContainer.appendChild(img)
+    })
+}
 
-//   DONE - Challenge 2
 const breedUrl = 'https://dog.ceo/api/breeds/list/all'
 
 function fetchBreeds(url) {
@@ -31,19 +49,27 @@ function fetchBreeds(url) {
     .then(resp => resp.json())
     .then(json => renderBreeds(json)); 
 }
+
 function renderBreeds(json) {
-    // console.log(json.message)
-    // console.log(`${Object.keys(json.message)}`);
     let breeds = Object.keys(json.message)
-    // console.log(breeds);
     const breedList = document.getElementById("dog-breeds");
-    breeds.forEach(breed => {
+
+        breeds.forEach(breed => {
             const li = document.createElement('li')
             li.innerHTML = breed
             breedList.appendChild(li)
-    })
+        })
 }
 
-// Challenge 3
 
-  
+function filterDogs() {
+        let dogs = document.querySelectorAll("li")
+        console.log(dogs)
+        dogs.forEach(dog => {
+            if (dog.innerText[0] === document.getElementById("breed-dropdown").value) {
+                document.querySelector("ul").appendChild(dog)
+            } else if (dog.innerText[0] !== document.getElementById("breed-dropdown").value) {
+                document.querySelector("ul").removeChild(dog)
+            }
+        })
+}
