@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
     })
 
-    document.getElementById("breed-dropdown").addEventListener('click', function(){
+    document.getElementById("breed-dropdown").addEventListener('mouseover', function(){
         filterDogs()
     })
 })
@@ -64,14 +64,12 @@ function renderBreeds(json) {
 
 function filterDogs(json) {
     let dogs = document.querySelectorAll("li")
-    // let dogs = Object.keys(json.message)
-
-    document.getElementById("breed-dropdown").addEventListener('click', function(){
         dogs.forEach(dog => {
 
             if (dog.innerText[0] !== document.getElementById("breed-dropdown").value) {
-                document.getElementById("dog-breeds").removeChild(dog)
-            } 
+                dog.style.display = "none"
+            } else if (dog.innerText[0] === document.getElementById("breed-dropdown").value) {
+                dog.style.display = ""
+            }
         })
-    })
 }
