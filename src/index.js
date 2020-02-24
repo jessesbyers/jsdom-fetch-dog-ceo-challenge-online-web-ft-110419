@@ -18,9 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
     document.getElementById("breed-dropdown").addEventListener('click', function(){
-        fetchBreeds(breedUrl);            
         filterDogs()
-        console.log("fetched and filtered dogs")
     })
 })
 
@@ -50,6 +48,7 @@ function fetchBreeds(url) {
     .then(json => renderBreeds(json)); 
 }
 
+
 function renderBreeds(json) {
     let breeds = Object.keys(json.message)
     const breedList = document.getElementById("dog-breeds");
@@ -59,17 +58,20 @@ function renderBreeds(json) {
             li.innerHTML = breed
             breedList.appendChild(li)
         })
+
 }
 
 
-function filterDogs() {
-        let dogs = document.querySelectorAll("li")
-        console.log(dogs)
+function filterDogs(json) {
+    let dogs = document.querySelectorAll("li")
+    // let dogs = Object.keys(json.message)
+
+    document.getElementById("breed-dropdown").addEventListener('click', function(){
         dogs.forEach(dog => {
-            if (dog.innerText[0] === document.getElementById("breed-dropdown").value) {
-                document.querySelector("ul").appendChild(dog)
-            } else if (dog.innerText[0] !== document.getElementById("breed-dropdown").value) {
-                document.querySelector("ul").removeChild(dog)
-            }
+
+            if (dog.innerText[0] !== document.getElementById("breed-dropdown").value) {
+                document.getElementById("dog-breeds").removeChild(dog)
+            } 
         })
+    })
 }
